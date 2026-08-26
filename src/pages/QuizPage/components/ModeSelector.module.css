@@ -1,0 +1,70 @@
+.container {
+  text-align: center;
+}
+
+.heading {
+  font-family: var(--display);
+  font-size: 0.85rem;
+  color: var(--screen-text);
+  margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+  color: var(--screen-text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-lg);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--screen-bg-raised);
+  border: 1px solid var(--screen-border);
+  border-radius: var(--radius-md);
+  color: var(--screen-text);
+  text-align: left;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.card:hover {
+  border-color: var(--light-blue);
+  box-shadow: 0 0 10px var(--screen-glow);
+  transform: translateX(2px);
+}
+
+.emoji {
+  font-size: 1.5rem;
+}
+
+.label {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.description {
+  font-size: 0.75rem;
+  color: var(--screen-text-secondary);
+}
+
+.best {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--light-blue);
+  margin-top: 2px;
+}
+
+.totalGames {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--screen-text-secondary);
+}

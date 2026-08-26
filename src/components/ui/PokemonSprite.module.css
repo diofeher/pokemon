@@ -1,0 +1,29 @@
+.sprite {
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  image-rendering: auto;
+}
+
+/* Sizes */
+.sm { width: 48px; height: 48px; }
+.md { width: 80px; height: 80px; }
+.lg { width: 160px; height: 160px; }
+.xl { width: 220px; height: 220px; }
+
+/* Silhouette effect */
+.silhouette {
+  filter: brightness(0) drop-shadow(0 0 4px var(--screen-glow));
+  transition: filter 0.4s ease;
+}
+
+.revealed {
+  filter: none;
+  transition: filter 0.4s ease;
+}
+
+@keyframes flashReveal {
+  0% { filter: brightness(0); transform: scale(1); }
+  40% { filter: brightness(1.3); transform: scale(1.05); }
+  100% { filter: none; transform: scale(1); }
+}

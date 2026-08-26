@@ -1,0 +1,113 @@
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.filters {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.search {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  background: var(--screen-bg-raised);
+  border: 1px solid var(--screen-border);
+  border-radius: var(--radius-sm);
+  color: var(--screen-text);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.search:focus {
+  border-color: var(--light-blue);
+  box-shadow: 0 0 8px var(--screen-glow);
+}
+
+.search::placeholder {
+  color: var(--screen-text-secondary);
+}
+
+.typeSelect {
+  padding: 0.5rem 0.75rem;
+  background: var(--screen-bg-raised);
+  border: 1px solid var(--screen-border);
+  border-radius: var(--radius-sm);
+  color: var(--screen-text);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.count {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--screen-text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--space-sm);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-sm);
+  background: var(--screen-bg-raised);
+  border: 1px solid var(--screen-border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.card:hover {
+  border-color: var(--light-blue);
+  box-shadow: 0 0 8px var(--screen-glow);
+}
+
+.dexNumber {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--screen-text-secondary);
+}
+
+.pokemonName {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--screen-text);
+  text-align: center;
+}
+
+.types {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.region {
+  font-size: 0.6rem;
+  color: var(--screen-text-secondary);
+}
+
+.more {
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--screen-text-secondary);
+  margin-top: var(--space-md);
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+}

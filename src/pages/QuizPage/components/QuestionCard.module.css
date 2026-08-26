@@ -1,0 +1,134 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.prompt {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--screen-text);
+  text-align: center;
+}
+
+.promptImage {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-sm) 0;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.75rem 1rem;
+  background: var(--screen-bg-raised);
+  border: 1px solid var(--screen-border);
+  border-radius: var(--radius-md);
+  color: var(--screen-text);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  text-align: left;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.option:hover:not(:disabled) {
+  border-color: var(--light-blue);
+  box-shadow: 0 0 10px var(--screen-glow);
+  transform: translateX(2px);
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.correct {
+  border-color: var(--correct) !important;
+  background: var(--correct-bg) !important;
+}
+
+.wrong {
+  border-color: var(--wrong) !important;
+  background: var(--wrong-bg) !important;
+}
+
+.dimmed {
+  opacity: 0.4;
+}
+
+.optionLabel {
+  flex: 1;
+}
+
+.feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  animation: fadeIn 0.3s ease;
+}
+
+.feedbackText {
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.correctText {
+  color: var(--correct);
+}
+
+.wrongText {
+  color: var(--wrong);
+}
+
+.wrongText strong {
+  color: var(--correct);
+}
+
+.nextButton {
+  background: linear-gradient(
+    155deg,
+    var(--pokedex-red-light),
+    var(--pokedex-red)
+  );
+  border: 2px solid var(--pokedex-red-dark);
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.6rem 2rem;
+  box-shadow: 0 4px 0 var(--pokedex-red-dark),
+    0 6px 12px rgba(0, 0, 0, 0.3),
+    inset 0 2px 2px rgba(255, 255, 255, 0.3);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.nextButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 var(--pokedex-red-dark),
+    0 8px 16px rgba(0, 0, 0, 0.35),
+    inset 0 2px 2px rgba(255, 255, 255, 0.3);
+}
+
+.nextButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--pokedex-red-dark),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
