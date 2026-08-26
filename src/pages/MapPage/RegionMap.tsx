@@ -29,7 +29,7 @@ const REGION_HOTSPOTS: {
   { id: "sinnoh", x: 70, y: 19, w: 10, h: 7, color: "#3b82f6" },
   { id: "kanto", x: 69, y: 43, w: 10, h: 7, color: "#ef4444" },
   { id: "hoenn", x: 62, y: 53, w: 10, h: 7, color: "#22c55e" },
-  { id: "alola", x: 90, y: 37, w: 10, h: 7, color: "#14b8a6" },
+  { id: "alola", x: 85, y: 37, w: 10, h: 7, color: "#14b8a6" },
 ];
 
 export function RegionMap() {
