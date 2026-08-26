@@ -28,7 +28,7 @@
   position: absolute;
   padding: 0;
   background: transparent;
-  border: 2px solid transparent;
+  border: 2px solid var(--region-color);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
