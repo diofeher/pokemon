@@ -15,7 +15,11 @@ export const silhouetteToNameMode: QuizModeDefinition = {
     if (!target) throw new Error("No unused Pokémon available");
     usedIds.add(target.id);
 
-    const options = buildOptions(target, pokemon, (p) => p.name);
+    const options = buildOptions(
+      target,
+      pokemon,
+      (p) => `#${String(p.id).padStart(4, "0")} ${p.name}`
+    );
 
     return {
       id: generateId(),

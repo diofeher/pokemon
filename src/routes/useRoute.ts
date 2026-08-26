@@ -1,10 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
 
-export type AppRoute = "/" | "/pokedex";
+export type AppRoute = "/" | "/pokedex" | "/map";
 
 function getRoute(): AppRoute {
   const hash = window.location.hash.replace("#", "") || "/";
-  return hash === "/pokedex" ? "/pokedex" : "/";
+  if (hash === "/pokedex") return "/pokedex";
+  if (hash === "/map") return "/map";
+  return "/";
 }
 
 export function useRoute() {

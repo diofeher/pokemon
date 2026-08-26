@@ -59,6 +59,13 @@ export function Header({ currentRoute, onNavigate }: HeaderProps) {
         >
           📖 Pokédex
         </button>
+        <button
+          className={`${styles.navButton} ${currentRoute === "/map" ? styles.active : ""}`}
+          aria-current={currentRoute === "/map" ? "page" : undefined}
+          onClick={() => onNavigate("/map")}
+        >
+          🗺️ Map
+        </button>
       </nav>
     </header>
   );
