@@ -29,7 +29,7 @@ export const pokemonToRegionMode: QuizModeDefinition = {
     return {
       id: generateId(),
       modeId: "pokemon-to-region",
-      prompt: `Which region is ${target.name} from?`,
+      prompt: `Which region is #${String(target.id).padStart(4, "0")} ${target.name} from?`,
       promptImageUrl: target.spriteUrl,
       options,
       correctOptionId: target.regionId,

@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { POKEMON } from "../../data/pokemon";
+import { REGIONS } from "../../data/regions";
 import type { PokemonType } from "../../types/pokemon";
 import { ScreenBezel } from "../../components/layout/ScreenBezel";
 import { PokemonSprite } from "../../components/ui/PokemonSprite";
@@ -22,6 +23,8 @@ const MIN_COL_WIDTH = 120;
 export function PokedexPage() {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState<PokemonType | "">("");
+  const [activeRegion, setActiveRegion] = useState<string | null>(null);
+  const activeRegionRef = useRef<string | null>(null);
 
   const filtered = useMemo(() => {
     let result = POKEMON;
@@ -56,6 +59,47 @@ export function PokedexPage() {
     minColumnWidth: MIN_COL_WIDTH,
   });
 
+  // Track active region based on scroll position
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || columns === 0) return;
+
+    function updateActiveRegion() {
+      if (!el) return;
+      const scrollTop = el.scrollTop;
+      const midIndex = Math.floor(scrollTop / (ROW_HEIGHT + GRID_GAP)) * columns;
+      const pokemon = filtered[Math.min(midIndex, filtered.length - 1)];
+      if (pokemon) {
+        const newRegion = pokemon.regionId;
+        if (activeRegionRef.current !== newRegion) {
+          activeRegionRef.current = newRegion;
+          setActiveRegion(newRegion);
+        }
+      }
+    }
+
+    updateActiveRegion();
+    el.addEventListener("scroll", updateActiveRegion, { passive: true });
+    return () => el.removeEventListener("scroll", updateActiveRegion);
+  }, [filtered, columns, scrollRef]);
+
+  const handleRegionClick = useCallback(
+    (regionId: string) => {
+      const el = scrollRef.current;
+      if (!el || columns === 0) return;
+
+      const region = REGIONS.find((r) => r.id === regionId);
+      if (!region) return;
+
+      const index = filtered.findIndex((p) => p.regionId === regionId);
+      if (index < 0) return;
+
+      const row = Math.floor(index / columns);
+      el.scrollTo({ top: row * (ROW_HEIGHT + GRID_GAP), behavior: "smooth" });
+    },
+    [filtered, columns, scrollRef]
+  );
+
   const visibleItems = filtered.slice(visibleRange.start, visibleRange.end);
 
   return (
@@ -84,6 +128,22 @@ export function PokedexPage() {
               </option>
             ))}
           </select>
+        </div>
+
+        <div className={styles.regionChips}>
+          {REGIONS.map((r) => {
+            const hasMatch = filtered.some((p) => p.regionId === r.id);
+            if (!hasMatch) return null;
+            return (
+              <button
+                key={r.id}
+                className={`${styles.regionChip} ${activeRegion === r.id ? styles.regionChipActive : ""}`}
+                onClick={() => handleRegionClick(r.id)}
+              >
+                {r.name}
+              </button>
+            );
+          })}
         </div>
 
         <p className={styles.count}>{filtered.length} Pokémon</p>

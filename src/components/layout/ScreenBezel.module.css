@@ -1,10 +1,11 @@
 .page {
-  padding: 0 var(--space-sm) var(--space-md);
+  padding: 0 0 var(--space-md);
 }
 
 .screenBezel {
   background: var(--screen-bezel);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
+  margin: 0 var(--space-xs);
   padding: var(--space-sm);
   border: 2px solid #000;
 }

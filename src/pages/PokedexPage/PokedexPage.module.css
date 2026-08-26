@@ -43,6 +43,36 @@
   cursor: pointer;
 }
 
+.regionChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: var(--space-sm);
+}
+
+.regionChip {
+  padding: 3px 8px;
+  background: var(--screen-bg-raised);
+  border: 1px solid var(--screen-border);
+  border-radius: var(--radius-sm);
+  color: var(--screen-text-secondary);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.regionChip:hover {
+  border-color: var(--light-blue);
+  color: var(--screen-text);
+}
+
+.regionChipActive {
+  border-color: var(--light-blue);
+  color: var(--light-blue);
+  box-shadow: 0 0 6px var(--screen-glow);
+}
+
 .count {
   font-family: var(--mono);
   font-size: 0.7rem;

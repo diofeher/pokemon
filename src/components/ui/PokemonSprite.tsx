@@ -18,9 +18,16 @@ export function PokemonSprite({
   silhouette = false,
 }: PokemonSpriteProps) {
   const [error, setError] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
-  // Reset error state when src changes (new question)
-  useEffect(() => setError(false), [src]);
+  // Reset error + loaded state when src changes (new question)
+  useEffect(() => {
+    setError(false);
+    setLoaded(false);
+  }, [src]);
+
+  // Hide image until loaded when in silhouette mode to prevent flash
+  const hideUntilLoaded = silhouette && !loaded && !error;
 
   return (
     <img
@@ -28,6 +35,8 @@ export function PokemonSprite({
       alt={silhouette ? "???" : alt}
       loading="lazy"
       className={`${styles.sprite} ${styles[size]} ${silhouette ? styles.silhouette : styles.revealed}`}
+      style={hideUntilLoaded ? { visibility: "hidden" } : undefined}
+      onLoad={() => setLoaded(true)}
       onError={() => setError(true)}
     />
   );

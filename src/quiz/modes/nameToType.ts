@@ -39,7 +39,7 @@ export const nameToTypeMode: QuizModeDefinition = {
     return {
       id: generateId(),
       modeId: "name-to-type",
-      prompt: `What type is ${target.name}?`,
+      prompt: `What type is #${String(target.id).padStart(4, "0")} ${target.name}?`,
       promptImageUrl: target.spriteUrl,
       options,
       correctOptionId: correctLabel,
