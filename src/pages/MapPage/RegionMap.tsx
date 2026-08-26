@@ -21,15 +21,15 @@ const REGION_HOTSPOTS: {
   h: number;
   color: string;
 }[] = [
-  { id: "galar", x: 7, y: 35, w: 10, h: 7, color: "#f97316" },
-  { id: "paldea", x: 24, y: 37, w: 10, h: 7, color: "#a855f7" },
-  { id: "kalos", x: 37, y: 30, w: 10, h: 7, color: "#ec4899" },
+  { id: "galar", x: 6, y: 35, w: 10, h: 7, color: "#f97316" },
+  { id: "paldea", x: 22, y: 37, w: 10, h: 7, color: "#a855f7" },
+  { id: "kalos", x: 35, y: 30, w: 10, h: 7, color: "#ec4899" },
   { id: "unova", x: 37, y: 55, w: 10, h: 7, color: "#8b5cf6" },
   { id: "johto", x: 50, y: 43, w: 10, h: 7, color: "#f59e0b" },
   { id: "sinnoh", x: 70, y: 19, w: 10, h: 7, color: "#3b82f6" },
   { id: "kanto", x: 69, y: 43, w: 10, h: 7, color: "#ef4444" },
   { id: "hoenn", x: 62, y: 53, w: 10, h: 7, color: "#22c55e" },
-  { id: "alola", x: 87, y: 37, w: 10, h: 7, color: "#14b8a6" },
+  { id: "alola", x: 90, y: 37, w: 10, h: 7, color: "#14b8a6" },
 ];
 
 export function RegionMap() {
