@@ -11,12 +11,12 @@
 .lg { width: 160px; height: 160px; }
 .xl { width: 220px; height: 220px; }
 
-/* Silhouette effect */
+/* Silhouette effect — NO transition so it's instantly black */
 .silhouette {
   filter: brightness(0) drop-shadow(0 0 4px var(--screen-glow));
-  transition: filter 0.4s ease;
 }
 
+/* Reveal animates from silhouette to visible */
 .revealed {
   filter: none;
   transition: filter 0.4s ease;

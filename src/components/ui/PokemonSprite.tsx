@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./PokemonSprite.module.css";
 
 const FALLBACK_POKEBALL =
@@ -18,26 +18,32 @@ export function PokemonSprite({
   silhouette = false,
 }: PokemonSpriteProps) {
   const [error, setError] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  // Track which src has loaded — avoids useEffect timing gap
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
 
-  // Reset error + loaded state when src changes (new question)
-  useEffect(() => {
+  const actualSrc = error ? FALLBACK_POKEBALL : src;
+  const isLoaded = loadedSrc === actualSrc;
+
+  // Reset error when src changes (synchronous check, no useEffect delay)
+  if (error && loadedSrc !== null && loadedSrc !== src) {
     setError(false);
-    setLoaded(false);
-  }, [src]);
+  }
 
-  // Hide image until loaded when in silhouette mode to prevent flash
-  const hideUntilLoaded = silhouette && !loaded && !error;
+  // Hide until loaded in silhouette mode — prevents any flash of the real image
+  const hideUntilLoaded = silhouette && !isLoaded;
 
   return (
     <img
-      src={error ? FALLBACK_POKEBALL : src}
+      src={actualSrc}
       alt={silhouette ? "???" : alt}
       loading="lazy"
       className={`${styles.sprite} ${styles[size]} ${silhouette ? styles.silhouette : styles.revealed}`}
       style={hideUntilLoaded ? { visibility: "hidden" } : undefined}
-      onLoad={() => setLoaded(true)}
-      onError={() => setError(true)}
+      onLoad={() => setLoadedSrc(actualSrc)}
+      onError={() => {
+        setError(true);
+        setLoadedSrc(null);
+      }}
     />
   );
 }
