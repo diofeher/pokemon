@@ -8,25 +8,28 @@ import styles from "./MapPage.module.css";
 const BASE = import.meta.env.BASE_URL;
 
 /**
- * Clickable region hotspots positioned over the world map image.
- * x/y = center of the region label (% of image dimensions),
- * matched to mossen1998's Pokemon World Map.
+ * Invisible clickable hotspots aligned over the region labels
+ * on mossen1998's Pokemon World Map (1091×733).
+ * x/y = center of the ALL-CAPS label on the map (% of image).
+ * w/h = hotspot size covering the region area (% of image).
  */
 const REGION_HOTSPOTS: {
   id: string;
   x: number;
   y: number;
+  w: number;
+  h: number;
   color: string;
 }[] = [
-  { id: "galar", x: 7, y: 33, color: "#f97316" },
-  { id: "paldea", x: 19, y: 42, color: "#a855f7" },
-  { id: "kalos", x: 35, y: 27, color: "#ec4899" },
-  { id: "unova", x: 36, y: 56, color: "#8b5cf6" },
-  { id: "johto", x: 49, y: 40, color: "#f59e0b" },
-  { id: "sinnoh", x: 66, y: 12, color: "#3b82f6" },
-  { id: "kanto", x: 64, y: 40, color: "#ef4444" },
-  { id: "hoenn", x: 60, y: 58, color: "#22c55e" },
-  { id: "alola", x: 91, y: 25, color: "#14b8a6" },
+  { id: "galar", x: 9, y: 48, w: 12, h: 18, color: "#f97316" },
+  { id: "paldea", x: 24, y: 54, w: 12, h: 12, color: "#a855f7" },
+  { id: "kalos", x: 37, y: 42, w: 12, h: 14, color: "#ec4899" },
+  { id: "unova", x: 40, y: 68, w: 13, h: 14, color: "#8b5cf6" },
+  { id: "johto", x: 50, y: 57, w: 11, h: 12, color: "#f59e0b" },
+  { id: "sinnoh", x: 68, y: 28, w: 14, h: 18, color: "#3b82f6" },
+  { id: "kanto", x: 67, y: 55, w: 12, h: 14, color: "#ef4444" },
+  { id: "hoenn", x: 62, y: 72, w: 12, h: 10, color: "#22c55e" },
+  { id: "alola", x: 88, y: 52, w: 10, h: 14, color: "#14b8a6" },
 ];
 
 export function RegionMap() {
@@ -39,7 +42,6 @@ export function RegionMap() {
 
   return (
     <div className={styles.mapContainer}>
-      {/* World map with clickable hotspots */}
       <div className={styles.mapWrapper}>
         <img
           src={`${BASE}pokemon-world-map.jpg`}
@@ -48,7 +50,6 @@ export function RegionMap() {
           draggable={false}
         />
 
-        {/* Region hotspot buttons */}
         {REGION_HOTSPOTS.map((hs) => {
           const region = REGIONS.find((r) => r.id === hs.id);
           if (!region) return null;
@@ -59,20 +60,19 @@ export function RegionMap() {
               key={hs.id}
               className={`${styles.hotspot} ${isSelected ? styles.hotspotActive : ""}`}
               style={{
-                left: `${hs.x}%`,
-                top: `${hs.y}%`,
+                left: `${hs.x - hs.w / 2}%`,
+                top: `${hs.y - hs.h / 2}%`,
+                width: `${hs.w}%`,
+                height: `${hs.h}%`,
                 "--region-color": hs.color,
               } as React.CSSProperties}
               onClick={() => setSelected(isSelected ? null : hs.id)}
               aria-label={`${region.name} - Generation ${region.generation}`}
-            >
-              {region.name}
-            </button>
+            />
           );
         })}
       </div>
 
-      {/* Selected region detail panel */}
       {selectedRegion && (
         <div className={styles.regionDetail}>
           <div className={styles.detailHeader}>

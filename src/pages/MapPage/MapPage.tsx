@@ -6,7 +6,6 @@ export function MapPage() {
   return (
     <ScreenBezel>
       <div className={styles.content}>
-        <h2 className={styles.heading}>Region Map</h2>
         <RegionMap />
       </div>
     </ScreenBezel>
