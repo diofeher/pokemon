@@ -25,7 +25,7 @@ const REGION_HOTSPOTS: {
   { id: "paldea", x: 25, y: 40, w: 10, h: 7, color: "#a855f7" },
   { id: "kalos", x: 35, y: 30, w: 10, h: 7, color: "#ec4899" },
   { id: "unova", x: 37, y: 55, w: 10, h: 7, color: "#8b5cf6" },
-  { id: "johto", x: 50, y: 43, w: 10, h: 7, color: "#f59e0b" },
+  { id: "johto", x: 50, y: 44, w: 10, h: 7, color: "#f59e0b" },
   { id: "sinnoh", x: 71, y: 19, w: 12, h: 7, color: "#3b82f6" },
   { id: "kanto", x: 69, y: 43, w: 10, h: 7, color: "#ef4444" },
   { id: "hoenn", x: 62, y: 53, w: 10, h: 7, color: "#22c55e" },
