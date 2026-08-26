@@ -1,14 +1,5 @@
 .header {
-  background: linear-gradient(
-    155deg,
-    var(--pokedex-red-light) 0%,
-    var(--pokedex-red) 40%,
-    var(--pokedex-red-dark) 100%
-  );
   padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-xl) var(--radius-md) 0 0;
-  border: 3px solid var(--pokedex-red-darker);
-  border-bottom: none;
 }
 
 .topBar {
