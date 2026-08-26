@@ -11,7 +11,7 @@
   margin-bottom: var(--space-sm);
 }
 
-/* === Interactive SVG Map === */
+/* === World Map with Hotspots === */
 
 .mapContainer {
   display: flex;
@@ -19,11 +19,48 @@
   gap: var(--space-sm);
 }
 
-.worldMap {
-  width: 100%;
+.mapWrapper {
+  position: relative;
   border: 1px solid var(--screen-border);
   border-radius: var(--radius-md);
-  background: var(--screen-bg);
+  overflow: hidden;
+}
+
+.mapImage {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  padding: 3px 8px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.hotspot:hover {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: var(--region-color);
+  box-shadow: 0 0 10px var(--region-color);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.hotspotActive {
+  background: var(--region-color);
+  border-color: #fff;
+  box-shadow: 0 0 12px var(--region-color);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 /* === Region Detail Panel === */
@@ -36,23 +73,11 @@
 }
 
 .detailHeader {
-  padding: var(--space-sm) var(--space-md);
-  border-bottom: 1px solid var(--screen-border);
-}
-
-.detailTitleRow {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-}
-
-.detailMapThumb {
-  width: 80px;
-  height: 56px;
-  object-fit: contain;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--screen-border);
-  background: var(--screen-bg);
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--screen-border);
 }
 
 .detailTitle {
@@ -139,6 +164,11 @@
 }
 
 @media (max-width: 480px) {
+  .hotspot {
+    font-size: 0.45rem;
+    padding: 2px 5px;
+  }
+
   .detailGrid {
     max-height: 220px;
     grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
