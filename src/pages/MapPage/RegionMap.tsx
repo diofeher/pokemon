@@ -21,15 +21,15 @@ const REGION_HOTSPOTS: {
   h: number;
   color: string;
 }[] = [
-  { id: "galar", x: 9, y: 48, w: 12, h: 18, color: "#f97316" },
-  { id: "paldea", x: 24, y: 54, w: 12, h: 12, color: "#a855f7" },
-  { id: "kalos", x: 37, y: 42, w: 12, h: 14, color: "#ec4899" },
-  { id: "unova", x: 40, y: 68, w: 13, h: 14, color: "#8b5cf6" },
-  { id: "johto", x: 50, y: 57, w: 11, h: 12, color: "#f59e0b" },
-  { id: "sinnoh", x: 68, y: 28, w: 14, h: 18, color: "#3b82f6" },
-  { id: "kanto", x: 67, y: 55, w: 12, h: 14, color: "#ef4444" },
-  { id: "hoenn", x: 62, y: 72, w: 12, h: 10, color: "#22c55e" },
-  { id: "alola", x: 88, y: 52, w: 10, h: 14, color: "#14b8a6" },
+  { id: "galar", x: 7, y: 40, w: 10, h: 8, color: "#f97316" },
+  { id: "paldea", x: 22, y: 44, w: 10, h: 8, color: "#a855f7" },
+  { id: "kalos", x: 36, y: 35, w: 10, h: 8, color: "#ec4899" },
+  { id: "unova", x: 38, y: 55, w: 10, h: 8, color: "#8b5cf6" },
+  { id: "johto", x: 50, y: 50, w: 10, h: 8, color: "#f59e0b" },
+  { id: "sinnoh", x: 68, y: 24, w: 10, h: 8, color: "#3b82f6" },
+  { id: "kanto", x: 66, y: 47, w: 10, h: 8, color: "#ef4444" },
+  { id: "hoenn", x: 60, y: 60, w: 10, h: 8, color: "#22c55e" },
+  { id: "alola", x: 86, y: 44, w: 10, h: 8, color: "#14b8a6" },
 ];
 
 export function RegionMap() {
