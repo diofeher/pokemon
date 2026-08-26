@@ -22,7 +22,7 @@ const REGION_HOTSPOTS: {
   color: string;
 }[] = [
   { id: "galar", x: 6, y: 35, w: 10, h: 7, color: "#f97316" },
-  { id: "paldea", x: 22, y: 37, w: 10, h: 7, color: "#a855f7" },
+  { id: "paldea", x: 25, y: 40, w: 10, h: 7, color: "#a855f7" },
   { id: "kalos", x: 35, y: 30, w: 10, h: 7, color: "#ec4899" },
   { id: "unova", x: 37, y: 55, w: 10, h: 7, color: "#8b5cf6" },
   { id: "johto", x: 50, y: 43, w: 10, h: 7, color: "#f59e0b" },
