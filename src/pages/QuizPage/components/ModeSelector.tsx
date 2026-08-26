@@ -1,7 +1,9 @@
+import { useCallback } from "react";
 import { QUIZ_MODES } from "../../../quiz/registry";
 import { QUESTIONS_PER_ROUND } from "../../../quiz/generateRound";
 import { useStatsContext } from "../../../context/StatsContext";
 import { useDifficultyContext } from "../../../context/DifficultyContext";
+import { playSelect } from "../../../lib/sounds";
 import { DifficultySelector } from "./DifficultySelector";
 import type { QuizModeId } from "../../../types/quiz";
 import styles from "./ModeSelector.module.css";
@@ -13,6 +15,14 @@ interface ModeSelectorProps {
 export function ModeSelector({ onSelect }: ModeSelectorProps) {
   const { stats } = useStatsContext();
   const { difficulty } = useDifficultyContext();
+
+  const handleSelect = useCallback(
+    (modeId: QuizModeId) => {
+      playSelect();
+      onSelect(modeId);
+    },
+    [onSelect]
+  );
 
   return (
     <div className={styles.container}>
@@ -30,7 +40,7 @@ export function ModeSelector({ onSelect }: ModeSelectorProps) {
             <button
               key={mode.id}
               className={styles.card}
-              onClick={() => onSelect(mode.id)}
+              onClick={() => handleSelect(mode.id)}
             >
               <span className={styles.emoji}>{mode.emoji}</span>
               <span className={styles.label}>{mode.label}</span>

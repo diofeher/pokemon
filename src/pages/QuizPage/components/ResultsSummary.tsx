@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import type { QuizModeId } from "../../../types/quiz";
 import type { DifficultyId } from "../../../types/difficulty";
 import { useStatsContext } from "../../../context/StatsContext";
 import { getQuizMode } from "../../../quiz/registry";
 import { getDifficulty } from "../../../data/difficulties";
 import { QUESTIONS_PER_ROUND } from "../../../quiz/generateRound";
+import { playComplete } from "../../../lib/sounds";
 import styles from "./ResultsSummary.module.css";
 
 interface ResultsSummaryProps {
@@ -42,6 +44,11 @@ export function ResultsSummary({
   const difficulty = getDifficulty(difficultyId);
   const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
   const modeStats = stats.modes[difficultyId][modeId];
+
+  // Play completion sound on mount
+  useEffect(() => {
+    playComplete();
+  }, []);
 
   return (
     <div className={styles.container}>

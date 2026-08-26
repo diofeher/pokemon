@@ -50,10 +50,30 @@
   margin-bottom: var(--space-sm);
 }
 
+.scrollContainer {
+  height: 500px;
+  overflow-y: auto;
+  border-radius: var(--radius-sm);
+  scrollbar-width: thin;
+  scrollbar-color: var(--screen-border) transparent;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+  background: var(--screen-border);
+  border-radius: 3px;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: var(--space-sm);
+  gap: 8px;
 }
 
 .card {
@@ -62,6 +82,7 @@
   align-items: center;
   gap: 2px;
   padding: var(--space-sm);
+  height: 170px;
   background: var(--screen-bg-raised);
   border: 1px solid var(--screen-border);
   border-radius: var(--radius-md);
@@ -98,16 +119,8 @@
   color: var(--screen-text-secondary);
 }
 
-.more {
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--screen-text-secondary);
-  margin-top: var(--space-md);
-}
-
 @media (max-width: 480px) {
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  .scrollContainer {
+    height: 400px;
   }
 }

@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import type { QuizQuestion } from "../../../types/quiz";
 import { PokemonSprite } from "../../../components/ui/PokemonSprite";
+import { playCorrect, playWrong } from "../../../lib/sounds";
 import styles from "./QuestionCard.module.css";
 
 interface QuestionCardProps {
@@ -18,6 +20,22 @@ export function QuestionCard({
   onNext,
 }: QuestionCardProps) {
   const isSilhouetteMode = question.modeId === "silhouette-to-name";
+  const hasPlayedSound = useRef(false);
+
+  // Play sound on answer
+  useEffect(() => {
+    if (isAnswered && !hasPlayedSound.current) {
+      hasPlayedSound.current = true;
+      if (selectedOptionId === question.correctOptionId) {
+        playCorrect();
+      } else {
+        playWrong();
+      }
+    }
+    if (!isAnswered) {
+      hasPlayedSound.current = false;
+    }
+  }, [isAnswered, selectedOptionId, question.correctOptionId]);
 
   return (
     <div className={styles.card}>
