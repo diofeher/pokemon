@@ -1,4 +1,4 @@
-const NAMESPACE = "pokemon-quiz";
+const NAMESPACE = "pokemon";
 const VERSION = "v1";
 
 function buildKey(key: string): string {

@@ -18,8 +18,8 @@
 }
 
 .options {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-sm);
 }
 
@@ -41,7 +41,6 @@
 .option:hover:not(:disabled) {
   border-color: var(--light-blue);
   box-shadow: 0 0 10px var(--screen-glow);
-  transform: translateX(2px);
 }
 
 .option:disabled {
