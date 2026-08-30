@@ -10,7 +10,7 @@ export const pokemonToRegionMode: QuizModeDefinition = {
   emoji: "🗺️",
   description: "Guess which region a Pokémon is from",
 
-  ...createModeGenerators((target: Pokemon, pool: Pokemon[]) => {
+  ...createModeGenerators((target: Pokemon, _pool: Pokemon[]) => {
     const wrongRegions = sampleSize(
       REGIONS.filter((r) => r.id !== target.regionId),
       3
