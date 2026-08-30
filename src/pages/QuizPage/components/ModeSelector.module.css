@@ -70,16 +70,48 @@
   margin-top: 2px;
 }
 
-.reviewSection {
+.srSection {
   margin-bottom: var(--space-lg);
   text-align: center;
 }
 
-.reviewHeading {
+.srHeading {
   font-family: var(--display);
   font-size: 0.75rem;
   color: var(--screen-text);
   margin-bottom: var(--space-sm);
+}
+
+.srStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.srStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-xs);
+  background: var(--screen-bg-raised);
+  border: 1px solid var(--screen-border);
+  border-radius: var(--radius-sm);
+}
+
+.srStatValue {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--screen-text);
+}
+
+.srStatLabel {
+  font-size: 0.55rem;
+  color: var(--screen-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .reviewChips {

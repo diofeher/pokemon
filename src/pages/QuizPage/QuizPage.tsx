@@ -98,6 +98,7 @@ export function QuizPage() {
           onSelect={startPractice}
           onReview={startReview}
           dueCountsByMode={sr.dueCountsByMode}
+          srStats={sr.srStats}
         />
       )}
 

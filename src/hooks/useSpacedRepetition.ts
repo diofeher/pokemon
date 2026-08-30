@@ -3,7 +3,12 @@ import type { QuizModeId } from "../types/quiz";
 import { getNewCardState, calculateNextReview } from "../spacedRepetition/sm2";
 import { buildCardId } from "../spacedRepetition/cardId";
 import { loadCards, persistCards, type CardMap } from "../spacedRepetition/cardStore";
-import { getDueCardsForMode, getDueCountsByMode, type DueCard } from "../spacedRepetition/dueCards";
+import {
+  getDueCardsForMode,
+  getDueCountsByMode,
+  getAggregateStats,
+  type DueCard,
+} from "../spacedRepetition/dueCards";
 
 export function useSpacedRepetition() {
   const [cards, setCards] = useState<CardMap>(loadCards);
@@ -34,10 +39,15 @@ export function useSpacedRepetition() {
     [cards],
   );
 
+  const srStats = useMemo(
+    () => getAggregateStats(cards),
+    [cards],
+  );
+
   const resetCards = useCallback(() => {
     persistCards({});
     setCards({});
   }, []);
 
-  return { cards, recordReview, getDueCards, dueCountsByMode, resetCards };
+  return { cards, recordReview, getDueCards, dueCountsByMode, srStats, resetCards };
 }

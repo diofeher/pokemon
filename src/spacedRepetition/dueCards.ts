@@ -47,3 +47,32 @@ export function getDueCountsByMode(
   return counts as Record<QuizModeId, number>;
 }
 
+export interface SRStats {
+  tracked: number;
+  learning: number;
+  mastered: number;
+  due: number;
+}
+
+/** Aggregate SR stats across all modes */
+export function getAggregateStats(cards: CardMap): SRStats {
+  let tracked = 0;
+  let learning = 0;
+  let mastered = 0;
+  let due = 0;
+
+  for (const state of Object.values(cards)) {
+    tracked += 1;
+    if (state.interval > 21) {
+      mastered += 1;
+    } else {
+      learning += 1;
+    }
+    if (isDue(state)) {
+      due += 1;
+    }
+  }
+
+  return { tracked, learning, mastered, due };
+}
+

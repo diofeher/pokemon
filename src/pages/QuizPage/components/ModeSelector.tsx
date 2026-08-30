@@ -6,18 +6,21 @@ import { useDifficultyContext } from "../../../context/DifficultyContext";
 import { playSelect } from "../../../lib/sounds";
 import { DifficultySelector } from "./DifficultySelector";
 import type { QuizModeId } from "../../../types/quiz";
+import type { SRStats } from "../../../spacedRepetition/dueCards";
 import styles from "./ModeSelector.module.css";
 
 interface ModeSelectorProps {
   onSelect: (modeId: QuizModeId) => void;
   onReview: (modeId: QuizModeId) => void;
   dueCountsByMode: Record<QuizModeId, number>;
+  srStats: SRStats;
 }
 
 export function ModeSelector({
   onSelect,
   onReview,
   dueCountsByMode,
+  srStats,
 }: ModeSelectorProps) {
   const { stats } = useStatsContext();
   const { difficulty } = useDifficultyContext();
@@ -77,24 +80,44 @@ export function ModeSelector({
         })}
       </div>
 
-      {totalDue > 0 && (
-        <div className={styles.reviewSection}>
-          <h3 className={styles.reviewHeading}>📅 Spaced Review</h3>
-          <div className={styles.reviewChips}>
-            {QUIZ_MODES.map((mode) => {
-              const dueCount = dueCountsByMode[mode.id];
-              if (dueCount === 0) return null;
-              return (
-                <button
-                  key={mode.id}
-                  className={styles.reviewChip}
-                  onClick={() => handleReview(mode.id)}
-                >
-                  {mode.emoji} {mode.label} ({dueCount})
-                </button>
-              );
-            })}
+      {srStats.tracked > 0 && (
+        <div className={styles.srSection}>
+          <h3 className={styles.srHeading}>🧠 Spaced Repetition</h3>
+          <div className={styles.srStatsGrid}>
+            <div className={styles.srStat}>
+              <span className={styles.srStatValue}>{srStats.tracked}</span>
+              <span className={styles.srStatLabel}>Tracked</span>
+            </div>
+            <div className={styles.srStat}>
+              <span className={styles.srStatValue}>{srStats.learning}</span>
+              <span className={styles.srStatLabel}>Learning</span>
+            </div>
+            <div className={styles.srStat}>
+              <span className={styles.srStatValue}>{srStats.mastered}</span>
+              <span className={styles.srStatLabel}>Mastered</span>
+            </div>
+            <div className={styles.srStat}>
+              <span className={styles.srStatValue}>{srStats.due}</span>
+              <span className={styles.srStatLabel}>Due</span>
+            </div>
           </div>
+          {totalDue > 0 && (
+            <div className={styles.reviewChips}>
+              {QUIZ_MODES.map((mode) => {
+                const dueCount = dueCountsByMode[mode.id];
+                if (dueCount === 0) return null;
+                return (
+                  <button
+                    key={mode.id}
+                    className={styles.reviewChip}
+                    onClick={() => handleReview(mode.id)}
+                  >
+                    📅 Review {mode.label} ({dueCount})
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
 
