@@ -63,30 +63,86 @@
   margin-top: 2px;
 }
 
-.dueBadge {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--correct);
-  margin-top: 2px;
-}
-
 .srSection {
   margin-bottom: var(--space-lg);
   text-align: center;
+  border-top: 1px solid var(--screen-border);
+  padding-top: var(--space-md);
 }
 
 .srHeading {
   font-family: var(--display);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: var(--screen-text);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.srSubtitle {
+  font-size: 0.75rem;
+  color: var(--screen-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.srModes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.srModeButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--screen-bg-raised);
+  border: 1px solid var(--screen-border);
+  border-radius: var(--radius-md);
+  color: var(--screen-text-secondary);
+  text-align: left;
+  transition: border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
+  opacity: 0.5;
+}
+
+.srModeButton:disabled {
+  cursor: default;
+}
+
+.srModeActive {
+  opacity: 1;
+  border-color: var(--correct);
+}
+
+.srModeActive:hover {
+  box-shadow: 0 0 10px var(--screen-glow);
+  transform: translateX(2px);
+}
+
+.srModeEmoji {
+  font-size: 1.2rem;
+}
+
+.srModeLabel {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--screen-text);
+}
+
+.srModeDue {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--correct);
+}
+
+.srModeButton:not(.srModeActive) .srModeDue {
+  color: var(--screen-text-secondary);
 }
 
 .srStatsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
 }
 
 .srStat {
@@ -112,32 +168,6 @@
   color: var(--screen-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-}
-
-.reviewChips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  justify-content: center;
-}
-
-.reviewChip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: var(--space-xs) var(--space-sm);
-  background: var(--screen-bg-raised);
-  border: 1px solid var(--correct);
-  border-radius: 999px;
-  color: var(--screen-text);
-  font-size: 0.75rem;
-  font-weight: 600;
-  transition: background 0.15s, transform 0.1s;
-}
-
-.reviewChip:hover {
-  background: var(--screen-bg);
-  transform: scale(1.03);
 }
 
 .totalGames {

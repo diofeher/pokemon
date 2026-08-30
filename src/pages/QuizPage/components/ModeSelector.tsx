@@ -41,8 +41,6 @@ export function ModeSelector({
     [onReview]
   );
 
-  const totalDue = Object.values(dueCountsByMode).reduce((a, b) => a + b, 0);
-
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Choose a Quiz Mode</h2>
@@ -55,7 +53,6 @@ export function ModeSelector({
       <div className={styles.grid}>
         {QUIZ_MODES.map((mode) => {
           const modeStats = stats.modes[difficulty][mode.id];
-          const dueCount = dueCountsByMode[mode.id];
           return (
             <button
               key={mode.id}
@@ -70,19 +67,41 @@ export function ModeSelector({
                   Best: {modeStats.bestScore}/{QUESTIONS_PER_ROUND}
                 </span>
               )}
-              {dueCount > 0 && (
-                <span className={styles.dueBadge}>
-                  📬 {dueCount} due
-                </span>
-              )}
             </button>
           );
         })}
       </div>
 
-      {srStats.tracked > 0 && (
-        <div className={styles.srSection}>
-          <h3 className={styles.srHeading}>🧠 Spaced Repetition</h3>
+      <div className={styles.srSection}>
+        <h3 className={styles.srHeading}>🧠 Spaced Repetition</h3>
+        <p className={styles.srSubtitle}>
+          {srStats.tracked === 0
+            ? "Play quiz modes above to start tracking cards"
+            : "Review cards when they're due to strengthen memory"}
+        </p>
+
+        <div className={styles.srModes}>
+          {QUIZ_MODES.map((mode) => {
+            const dueCount = dueCountsByMode[mode.id];
+            const hasDue = dueCount > 0;
+            return (
+              <button
+                key={mode.id}
+                className={`${styles.srModeButton} ${hasDue ? styles.srModeActive : ""}`}
+                onClick={() => handleReview(mode.id)}
+                disabled={!hasDue}
+              >
+                <span className={styles.srModeEmoji}>{mode.emoji}</span>
+                <span className={styles.srModeLabel}>{mode.label}</span>
+                <span className={styles.srModeDue}>
+                  {hasDue ? `📬 ${dueCount} due` : "✓ caught up"}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {srStats.tracked > 0 && (
           <div className={styles.srStatsGrid}>
             <div className={styles.srStat}>
               <span className={styles.srStatValue}>{srStats.tracked}</span>
@@ -101,25 +120,8 @@ export function ModeSelector({
               <span className={styles.srStatLabel}>Due</span>
             </div>
           </div>
-          {totalDue > 0 && (
-            <div className={styles.reviewChips}>
-              {QUIZ_MODES.map((mode) => {
-                const dueCount = dueCountsByMode[mode.id];
-                if (dueCount === 0) return null;
-                return (
-                  <button
-                    key={mode.id}
-                    className={styles.reviewChip}
-                    onClick={() => handleReview(mode.id)}
-                  >
-                    📅 Review {mode.label} ({dueCount})
-                  </button>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      )}
+        )}
+      </div>
 
       {stats.totalGames > 0 && (
         <p className={styles.totalGames}>
