@@ -1,7 +1,7 @@
 import type { Pokemon } from "../../types/pokemon";
-import type { QuizModeDefinition, QuizQuestion } from "../../types/quiz";
+import type { QuizModeDefinition } from "../../types/quiz";
 import { sampleSize, shuffle, generateId } from "../../lib/arrayUtils";
-import { pickUnusedPokemon } from "../questionFactory";
+import { createModeGenerators } from "../questionFactory";
 import { REGIONS, getRegionName } from "../../data/regions";
 
 export const pokemonToRegionMode: QuizModeDefinition = {
@@ -10,12 +10,7 @@ export const pokemonToRegionMode: QuizModeDefinition = {
   emoji: "🗺️",
   description: "Guess which region a Pokémon is from",
 
-  generateQuestion(pokemon: Pokemon[], usedIds: Set<number>): QuizQuestion {
-    const target = pickUnusedPokemon(pokemon, usedIds);
-    if (!target) throw new Error("No unused Pokémon available");
-    usedIds.add(target.id);
-
-    // 1 correct region + 3 random wrong regions
+  ...createModeGenerators((target: Pokemon, pool: Pokemon[]) => {
     const wrongRegions = sampleSize(
       REGIONS.filter((r) => r.id !== target.regionId),
       3
@@ -29,11 +24,12 @@ export const pokemonToRegionMode: QuizModeDefinition = {
     return {
       id: generateId(),
       modeId: "pokemon-to-region",
+      targetPokemonId: target.id,
       prompt: `Which region is #${String(target.id).padStart(4, "0")} ${target.name} from?`,
       promptImageUrl: target.spriteUrl,
       options,
       correctOptionId: target.regionId,
       correctDetail: `Generation ${target.generation}`,
     };
-  },
+  }),
 };

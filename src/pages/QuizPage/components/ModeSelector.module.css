@@ -63,6 +63,51 @@
   margin-top: 2px;
 }
 
+.dueBadge {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--correct);
+  margin-top: 2px;
+}
+
+.reviewSection {
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.reviewHeading {
+  font-family: var(--display);
+  font-size: 0.75rem;
+  color: var(--screen-text);
+  margin-bottom: var(--space-sm);
+}
+
+.reviewChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  justify-content: center;
+}
+
+.reviewChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--screen-bg-raised);
+  border: 1px solid var(--correct);
+  border-radius: 999px;
+  color: var(--screen-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.reviewChip:hover {
+  background: var(--screen-bg);
+  transform: scale(1.03);
+}
+
 .totalGames {
   font-family: var(--mono);
   font-size: 0.7rem;

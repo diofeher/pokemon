@@ -8,7 +8,7 @@ interface QuestionCardProps {
   question: QuizQuestion;
   selectedOptionId: string | null;
   isAnswered: boolean;
-  onAnswer: (optionId: string) => void;
+  onAnswer: (optionId: string, timeMs: number) => void;
   onNext: () => void;
 }
 
@@ -21,6 +21,12 @@ export function QuestionCard({
 }: QuestionCardProps) {
   const isSilhouetteMode = question.modeId === "silhouette-to-name";
   const hasPlayedSound = useRef(false);
+  const questionStartTime = useRef(Date.now());
+
+  // Reset timer when question changes
+  useEffect(() => {
+    questionStartTime.current = Date.now();
+  }, [question.id]);
 
   // Play sound on answer
   useEffect(() => {
@@ -36,6 +42,12 @@ export function QuestionCard({
       hasPlayedSound.current = false;
     }
   }, [isAnswered, selectedOptionId, question.correctOptionId]);
+
+  const handleAnswer = (optionId: string) => {
+    if (isAnswered) return;
+    const timeMs = Date.now() - questionStartTime.current;
+    onAnswer(optionId, timeMs);
+  };
 
   return (
     <div className={styles.card}>
@@ -69,7 +81,7 @@ export function QuestionCard({
             <button
               key={option.id}
               className={optionClass}
-              onClick={() => !isAnswered && onAnswer(option.id)}
+              onClick={() => handleAnswer(option.id)}
               disabled={isAnswered}
             >
               <span className={styles.optionLabel}>{option.label}</span>

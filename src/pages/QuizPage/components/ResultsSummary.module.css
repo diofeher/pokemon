@@ -140,6 +140,12 @@
   }
 }
 
+.reviewNote {
+  font-size: 0.75rem;
+  color: var(--screen-text-secondary);
+  text-align: center;
+}
+
 @media (max-width: 480px) {
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);

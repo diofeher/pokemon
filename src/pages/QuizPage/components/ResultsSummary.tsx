@@ -13,6 +13,7 @@ interface ResultsSummaryProps {
   difficultyId: DifficultyId;
   score: number;
   total: number;
+  isReviewMode: boolean;
   onPlayAgain: () => void;
   onChangeModes: () => void;
 }
@@ -24,7 +25,13 @@ function getEmoji(percentage: number): string {
   return "💪";
 }
 
-function getMessage(percentage: number): string {
+function getMessage(percentage: number, isReview: boolean): string {
+  if (isReview) {
+    if (percentage === 100) return "Perfect review!";
+    if (percentage >= 70) return "Great recall!";
+    if (percentage >= 40) return "Keep reviewing!";
+    return "Review helps memory!";
+  }
   if (percentage === 100) return "Pokémon Master!";
   if (percentage >= 70) return "Great job, trainer!";
   if (percentage >= 40) return "Keep training!";
@@ -36,6 +43,7 @@ export function ResultsSummary({
   difficultyId,
   score,
   total,
+  isReviewMode,
   onPlayAgain,
   onChangeModes,
 }: ResultsSummaryProps) {
@@ -53,7 +61,7 @@ export function ResultsSummary({
   return (
     <div className={styles.container}>
       <span className={styles.emoji}>{getEmoji(percentage)}</span>
-      <h2 className={styles.message}>{getMessage(percentage)}</h2>
+      <h2 className={styles.message}>{getMessage(percentage, isReviewMode)}</h2>
 
       <div className={styles.scoreCard}>
         <span className={styles.scoreValue}>
@@ -63,33 +71,41 @@ export function ResultsSummary({
       </div>
 
       <p className={styles.mode}>
-        {mode.emoji} {mode.label} · {difficulty.emoji} {difficulty.label}
+        {isReviewMode ? "📅 Review" : `${mode.emoji} ${mode.label}`} · {difficulty.emoji} {difficulty.label}
       </p>
 
-      <div className={styles.statsGrid}>
-        <div className={styles.stat}>
-          <span className={styles.statValue}>
-            {modeStats.bestScore}/{QUESTIONS_PER_ROUND}
-          </span>
-          <span className={styles.statLabel}>Best Score</span>
+      {!isReviewMode && (
+        <div className={styles.statsGrid}>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>
+              {modeStats.bestScore}/{QUESTIONS_PER_ROUND}
+            </span>
+            <span className={styles.statLabel}>Best Score</span>
+          </div>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>{modeStats.currentStreak}</span>
+            <span className={styles.statLabel}>Streak</span>
+          </div>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>{modeStats.bestStreak}</span>
+            <span className={styles.statLabel}>Best Streak</span>
+          </div>
+          <div className={styles.stat}>
+            <span className={styles.statValue}>{modeStats.gamesPlayed}</span>
+            <span className={styles.statLabel}>Games</span>
+          </div>
         </div>
-        <div className={styles.stat}>
-          <span className={styles.statValue}>{modeStats.currentStreak}</span>
-          <span className={styles.statLabel}>Streak</span>
-        </div>
-        <div className={styles.stat}>
-          <span className={styles.statValue}>{modeStats.bestStreak}</span>
-          <span className={styles.statLabel}>Best Streak</span>
-        </div>
-        <div className={styles.stat}>
-          <span className={styles.statValue}>{modeStats.gamesPlayed}</span>
-          <span className={styles.statLabel}>Games</span>
-        </div>
-      </div>
+      )}
+
+      {isReviewMode && (
+        <p className={styles.reviewNote}>
+          🧠 Cards reviewed — intervals updated via SM-2
+        </p>
+      )}
 
       <div className={styles.actions}>
         <button className={styles.primaryButton} onClick={onPlayAgain}>
-          🔄 Play Again
+          {isReviewMode ? "📅 Review More" : "🔄 Play Again"}
         </button>
         <button className={styles.secondaryButton} onClick={onChangeModes}>
           ← Change Mode

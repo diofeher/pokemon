@@ -1,5 +1,6 @@
 import { StatsProvider } from "./context/StatsContext";
 import { DifficultyProvider } from "./context/DifficultyContext";
+import { SpacedRepetitionProvider } from "./context/SpacedRepetitionContext";
 import { useRoute } from "./routes/useRoute";
 import { Header } from "./components/layout/Header";
 import { QuizPage } from "./pages/QuizPage/QuizPage";
@@ -13,13 +14,15 @@ function App() {
   return (
     <DifficultyProvider>
       <StatsProvider>
-        <div className={styles.shell}>
-          <Header currentRoute={path} onNavigate={navigate} />
-          {path === "/" && <QuizPage />}
-          {path === "/pokedex" && <PokedexPage />}
-          {path === "/map" && <MapPage />}
-          <div className={styles.bottomEdge} />
-        </div>
+        <SpacedRepetitionProvider>
+          <div className={styles.shell}>
+            <Header currentRoute={path} onNavigate={navigate} />
+            {path === "/" && <QuizPage />}
+            {path === "/pokedex" && <PokedexPage />}
+            {path === "/map" && <MapPage />}
+            <div className={styles.bottomEdge} />
+          </div>
+        </SpacedRepetitionProvider>
       </StatsProvider>
     </DifficultyProvider>
   );

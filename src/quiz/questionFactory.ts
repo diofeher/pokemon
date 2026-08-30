@@ -1,5 +1,5 @@
 import type { Pokemon } from "../types/pokemon";
-import type { QuizOption } from "../types/quiz";
+import type { QuizOption, QuizQuestion } from "../types/quiz";
 import { sampleSize, shuffle } from "../lib/arrayUtils";
 
 /**
@@ -51,5 +51,25 @@ export function pickUnusedPokemon(
   const available = pokemon.filter((p) => !usedIds.has(p.id));
   if (available.length === 0) return null;
   return available[Math.floor(Math.random() * available.length)];
+}
+
+/**
+ * Create both generateQuestion and generateQuestionForPokemon from a single
+ * buildQuestion function, eliminating boilerplate in each mode file.
+ */
+export function createModeGenerators(
+  buildQuestion: (target: Pokemon, pool: Pokemon[]) => QuizQuestion
+) {
+  return {
+    generateQuestion(pokemon: Pokemon[], usedIds: Set<number>): QuizQuestion {
+      const target = pickUnusedPokemon(pokemon, usedIds);
+      if (!target) throw new Error("No unused Pokémon available");
+      usedIds.add(target.id);
+      return buildQuestion(target, pokemon);
+    },
+    generateQuestionForPokemon(target: Pokemon, pool: Pokemon[]): QuizQuestion {
+      return buildQuestion(target, pool);
+    },
+  };
 }
 

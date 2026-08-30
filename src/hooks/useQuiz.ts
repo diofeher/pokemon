@@ -1,24 +1,31 @@
 import { useReducer, useCallback, useMemo } from "react";
-import type { Pokemon } from "../types/pokemon";
 import type { DifficultyId } from "../types/difficulty";
-import type { QuizModeId } from "../types/quiz";
+import type { QuizModeId, QuizQuestion } from "../types/quiz";
 import { quizReducer, initialQuizState } from "../quiz/quizReducer";
-import { generateRound } from "../quiz/generateRound";
 
-export function useQuiz(pokemon: Pokemon[], difficulty: DifficultyId) {
+export function useQuiz() {
   const [state, dispatch] = useReducer(quizReducer, initialQuizState);
 
   const start = useCallback(
-    (modeId: QuizModeId) => {
-      const questions = generateRound(modeId, pokemon);
-      dispatch({
-        type: "SELECT_MODE",
-        modeId,
-        difficultyId: difficulty,
-        questions,
-      });
+    (
+      modeId: QuizModeId,
+      difficultyId: DifficultyId,
+      questions: QuizQuestion[]
+    ) => {
+      dispatch({ type: "SELECT_MODE", modeId, difficultyId, questions });
     },
-    [pokemon, difficulty]
+    []
+  );
+
+  const startReview = useCallback(
+    (
+      modeId: QuizModeId,
+      difficultyId: DifficultyId,
+      questions: QuizQuestion[]
+    ) => {
+      dispatch({ type: "START_REVIEW", modeId, difficultyId, questions });
+    },
+    []
   );
 
   const answer = useCallback((optionId: string) => {
@@ -51,6 +58,7 @@ export function useQuiz(pokemon: Pokemon[], difficulty: DifficultyId) {
     totalQuestions: state.questions.length,
     currentIndex: state.currentIndex,
     start,
+    startReview,
     answer,
     next,
     restart,

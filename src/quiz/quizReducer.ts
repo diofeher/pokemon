@@ -8,23 +8,36 @@ export const initialQuizState: QuizState = {
   currentIndex: 0,
   selectedOptionId: null,
   isAnswered: false,
+  isReviewMode: false,
   score: 0,
 };
+
+function startRound(
+  state: QuizState,
+  action: { modeId: QuizState["modeId"]; difficultyId: QuizState["difficultyId"]; questions: QuizState["questions"] },
+  isReviewMode: boolean,
+): QuizState {
+  return {
+    ...state,
+    status: "in-progress",
+    modeId: action.modeId,
+    difficultyId: action.difficultyId,
+    questions: action.questions,
+    currentIndex: 0,
+    selectedOptionId: null,
+    isAnswered: false,
+    isReviewMode,
+    score: 0,
+  };
+}
 
 export function quizReducer(state: QuizState, action: QuizAction): QuizState {
   switch (action.type) {
     case "SELECT_MODE":
-      return {
-        ...state,
-        status: "in-progress",
-        modeId: action.modeId,
-        difficultyId: action.difficultyId,
-        questions: action.questions,
-        currentIndex: 0,
-        selectedOptionId: null,
-        isAnswered: false,
-        score: 0,
-      };
+      return startRound(state, action, false);
+
+    case "START_REVIEW":
+      return startRound(state, action, true);
 
     case "ANSWER": {
       if (state.isAnswered) return state;

@@ -14,6 +14,7 @@ export interface QuizOption {
 export interface QuizQuestion {
   id: string;
   modeId: QuizModeId;
+  targetPokemonId: number;
   prompt: string;
   promptImageUrl?: string;
   options: QuizOption[];
@@ -27,9 +28,15 @@ export interface QuizModeDefinition {
   label: string;
   emoji: string;
   description: string;
+  /** Generate a question for a random unused Pokémon from the pool */
   generateQuestion: (
     pokemon: import("./pokemon").Pokemon[],
     usedIds: Set<number>
+  ) => QuizQuestion;
+  /** Generate a question for a specific target Pokémon (used by review mode) */
+  generateQuestionForPokemon: (
+    target: import("./pokemon").Pokemon,
+    pool: import("./pokemon").Pokemon[]
   ) => QuizQuestion;
 }
 
@@ -43,12 +50,19 @@ export interface QuizState {
   currentIndex: number;
   selectedOptionId: string | null;
   isAnswered: boolean;
+  isReviewMode: boolean;
   score: number;
 }
 
 export type QuizAction =
   | {
       type: "SELECT_MODE";
+      modeId: QuizModeId;
+      difficultyId: DifficultyId;
+      questions: QuizQuestion[];
+    }
+  | {
+      type: "START_REVIEW";
       modeId: QuizModeId;
       difficultyId: DifficultyId;
       questions: QuizQuestion[];

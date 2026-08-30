@@ -10,9 +10,15 @@ import styles from "./ModeSelector.module.css";
 
 interface ModeSelectorProps {
   onSelect: (modeId: QuizModeId) => void;
+  onReview: (modeId: QuizModeId) => void;
+  dueCountsByMode: Record<QuizModeId, number>;
 }
 
-export function ModeSelector({ onSelect }: ModeSelectorProps) {
+export function ModeSelector({
+  onSelect,
+  onReview,
+  dueCountsByMode,
+}: ModeSelectorProps) {
   const { stats } = useStatsContext();
   const { difficulty } = useDifficultyContext();
 
@@ -23,6 +29,16 @@ export function ModeSelector({ onSelect }: ModeSelectorProps) {
     },
     [onSelect]
   );
+
+  const handleReview = useCallback(
+    (modeId: QuizModeId) => {
+      playSelect();
+      onReview(modeId);
+    },
+    [onReview]
+  );
+
+  const totalDue = Object.values(dueCountsByMode).reduce((a, b) => a + b, 0);
 
   return (
     <div className={styles.container}>
@@ -36,6 +52,7 @@ export function ModeSelector({ onSelect }: ModeSelectorProps) {
       <div className={styles.grid}>
         {QUIZ_MODES.map((mode) => {
           const modeStats = stats.modes[difficulty][mode.id];
+          const dueCount = dueCountsByMode[mode.id];
           return (
             <button
               key={mode.id}
@@ -50,10 +67,36 @@ export function ModeSelector({ onSelect }: ModeSelectorProps) {
                   Best: {modeStats.bestScore}/{QUESTIONS_PER_ROUND}
                 </span>
               )}
+              {dueCount > 0 && (
+                <span className={styles.dueBadge}>
+                  📬 {dueCount} due
+                </span>
+              )}
             </button>
           );
         })}
       </div>
+
+      {totalDue > 0 && (
+        <div className={styles.reviewSection}>
+          <h3 className={styles.reviewHeading}>📅 Spaced Review</h3>
+          <div className={styles.reviewChips}>
+            {QUIZ_MODES.map((mode) => {
+              const dueCount = dueCountsByMode[mode.id];
+              if (dueCount === 0) return null;
+              return (
+                <button
+                  key={mode.id}
+                  className={styles.reviewChip}
+                  onClick={() => handleReview(mode.id)}
+                >
+                  {mode.emoji} {mode.label} ({dueCount})
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {stats.totalGames > 0 && (
         <p className={styles.totalGames}>
