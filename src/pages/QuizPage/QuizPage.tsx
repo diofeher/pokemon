@@ -61,6 +61,14 @@ export function QuizPage() {
     [quiz, sr]
   );
 
+  // Handle skip: quality 0 = "don't know" (worst SR rating)
+  const handleSkip = useCallback(() => {
+    const q = quiz.currentQuestion;
+    if (!q) return;
+    sr.recordReview(q.modeId, q.targetPokemonId, 0);
+    quiz.skip();
+  }, [quiz, sr]);
+
   // Record stats only for practice rounds (not review)
   useEffect(() => {
     if (
@@ -114,7 +122,10 @@ export function QuizPage() {
             question={quiz.currentQuestion}
             selectedOptionId={quiz.selectedOptionId}
             isAnswered={quiz.isAnswered}
+            isSkipped={quiz.isSkipped}
+            isReviewMode={quiz.isReviewMode}
             onAnswer={handleAnswer}
+            onSkip={handleSkip}
             onNext={quiz.next}
           />
         </div>

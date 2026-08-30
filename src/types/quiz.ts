@@ -50,8 +50,10 @@ export interface QuizState {
   currentIndex: number;
   selectedOptionId: string | null;
   isAnswered: boolean;
+  isSkipped: boolean;
   isReviewMode: boolean;
   score: number;
+  skipped: number;
 }
 
 export type QuizAction =
@@ -68,6 +70,7 @@ export type QuizAction =
       questions: QuizQuestion[];
     }
   | { type: "ANSWER"; optionId: string }
+  | { type: "SKIP" }
   | { type: "NEXT" }
   | { type: "RESTART" }
   | { type: "BACK_TO_MODES" };

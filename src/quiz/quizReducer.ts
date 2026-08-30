@@ -8,8 +8,10 @@ export const initialQuizState: QuizState = {
   currentIndex: 0,
   selectedOptionId: null,
   isAnswered: false,
+  isSkipped: false,
   isReviewMode: false,
   score: 0,
+  skipped: 0,
 };
 
 function startRound(
@@ -26,8 +28,10 @@ function startRound(
     currentIndex: 0,
     selectedOptionId: null,
     isAnswered: false,
+    isSkipped: false,
     isReviewMode,
     score: 0,
+    skipped: 0,
   };
 }
 
@@ -47,7 +51,19 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         ...state,
         selectedOptionId: action.optionId,
         isAnswered: true,
+        isSkipped: false,
         score: isCorrect ? state.score + 1 : state.score,
+      };
+    }
+
+    case "SKIP": {
+      if (state.isAnswered) return state;
+      return {
+        ...state,
+        selectedOptionId: null,
+        isAnswered: true,
+        isSkipped: true,
+        skipped: state.skipped + 1,
       };
     }
 
@@ -61,6 +77,7 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         currentIndex: nextIndex,
         selectedOptionId: null,
         isAnswered: false,
+        isSkipped: false,
       };
     }
 

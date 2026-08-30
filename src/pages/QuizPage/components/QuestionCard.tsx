@@ -8,7 +8,10 @@ interface QuestionCardProps {
   question: QuizQuestion;
   selectedOptionId: string | null;
   isAnswered: boolean;
+  isSkipped: boolean;
+  isReviewMode: boolean;
   onAnswer: (optionId: string, timeMs: number) => void;
+  onSkip: () => void;
   onNext: () => void;
 }
 
@@ -16,7 +19,10 @@ export function QuestionCard({
   question,
   selectedOptionId,
   isAnswered,
+  isSkipped,
+  isReviewMode,
   onAnswer,
+  onSkip,
   onNext,
 }: QuestionCardProps) {
   const isSilhouetteMode = question.modeId === "silhouette-to-name";
@@ -32,7 +38,9 @@ export function QuestionCard({
   useEffect(() => {
     if (isAnswered && !hasPlayedSound.current) {
       hasPlayedSound.current = true;
-      if (selectedOptionId === question.correctOptionId) {
+      if (isSkipped) {
+        playWrong();
+      } else if (selectedOptionId === question.correctOptionId) {
         playCorrect();
       } else {
         playWrong();
@@ -41,7 +49,7 @@ export function QuestionCard({
     if (!isAnswered) {
       hasPlayedSound.current = false;
     }
-  }, [isAnswered, selectedOptionId, question.correctOptionId]);
+  }, [isAnswered, isSkipped, selectedOptionId, question.correctOptionId]);
 
   const handleAnswer = (optionId: string) => {
     if (isAnswered) return;
@@ -90,10 +98,26 @@ export function QuestionCard({
         })}
       </div>
 
+      {isReviewMode && !isAnswered && (
+        <button className={styles.skipButton} onClick={onSkip}>
+          🤷 Don't know
+        </button>
+      )}
+
       {isAnswered && (
         <div className={styles.feedback}>
           <p className={styles.feedbackText}>
-            {selectedOptionId === question.correctOptionId ? (
+            {isSkipped ? (
+              <span className={styles.wrongText}>
+                🤷 Skipped — the answer was{" "}
+                <strong>
+                  {question.options.find((o) => o.id === question.correctOptionId)?.label}
+                </strong>
+                {question.correctDetail && (
+                  <> ({question.correctDetail})</>
+                )}
+              </span>
+            ) : selectedOptionId === question.correctOptionId ? (
               <span className={styles.correctText}>
                 ✅ Correct!
                 {question.correctDetail && (

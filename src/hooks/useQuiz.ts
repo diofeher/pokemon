@@ -32,6 +32,10 @@ export function useQuiz() {
     dispatch({ type: "ANSWER", optionId });
   }, []);
 
+  const skip = useCallback(() => {
+    dispatch({ type: "SKIP" });
+  }, []);
+
   const next = useCallback(() => {
     dispatch({ type: "NEXT" });
   }, []);
@@ -60,6 +64,7 @@ export function useQuiz() {
     start,
     startReview,
     answer,
+    skip,
     next,
     restart,
     backToModes,
