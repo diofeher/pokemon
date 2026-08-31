@@ -6,6 +6,7 @@ import { loadCards, persistCards, type CardMap } from "../spacedRepetition/cardS
 import {
   getDueCardsForMode,
   getDueCountsByMode,
+  getTrackedCountsByMode,
   getAggregateStats,
   type DueCard,
 } from "../spacedRepetition/dueCards";
@@ -39,6 +40,11 @@ export function useSpacedRepetition() {
     [cards],
   );
 
+  const trackedCountsByMode = useMemo(
+    () => getTrackedCountsByMode(cards),
+    [cards],
+  );
+
   const srStats = useMemo(
     () => getAggregateStats(cards),
     [cards],
@@ -49,5 +55,5 @@ export function useSpacedRepetition() {
     setCards({});
   }, []);
 
-  return { cards, recordReview, getDueCards, dueCountsByMode, srStats, resetCards };
+  return { cards, recordReview, getDueCards, dueCountsByMode, trackedCountsByMode, srStats, resetCards };
 }

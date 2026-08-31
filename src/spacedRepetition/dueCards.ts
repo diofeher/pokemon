@@ -47,6 +47,24 @@ export function getDueCountsByMode(
   return counts as Record<QuizModeId, number>;
 }
 
+/** Get tracked card counts per mode */
+export function getTrackedCountsByMode(
+  cards: CardMap,
+): Record<QuizModeId, number> {
+  const counts: Record<string, number> = {
+    "silhouette-to-name": 0,
+    "name-to-type": 0,
+    "pokemon-to-region": 0,
+  };
+  for (const cardId of Object.keys(cards)) {
+    const parsed = parseCardId(cardId);
+    if (parsed && parsed.modeId in counts) {
+      counts[parsed.modeId] += 1;
+    }
+  }
+  return counts as Record<QuizModeId, number>;
+}
+
 export interface SRStats {
   tracked: number;
   learning: number;

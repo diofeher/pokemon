@@ -13,6 +13,7 @@ interface ModeSelectorProps {
   onSelect: (modeId: QuizModeId) => void;
   onReview: (modeId: QuizModeId) => void;
   dueCountsByMode: Record<QuizModeId, number>;
+  trackedCountsByMode: Record<QuizModeId, number>;
   srStats: SRStats;
 }
 
@@ -20,6 +21,7 @@ export function ModeSelector({
   onSelect,
   onReview,
   dueCountsByMode,
+  trackedCountsByMode,
   srStats,
 }: ModeSelectorProps) {
   const { stats } = useStatsContext();
@@ -83,7 +85,9 @@ export function ModeSelector({
         <div className={styles.srModes}>
           {QUIZ_MODES.map((mode) => {
             const dueCount = dueCountsByMode[mode.id];
+            const trackedCount = trackedCountsByMode[mode.id];
             const hasDue = dueCount > 0;
+            const hasCards = trackedCount > 0;
             return (
               <button
                 key={mode.id}
@@ -94,7 +98,11 @@ export function ModeSelector({
                 <span className={styles.srModeEmoji}>{mode.emoji}</span>
                 <span className={styles.srModeLabel}>{mode.label}</span>
                 <span className={styles.srModeDue}>
-                  {hasDue ? `📬 ${dueCount} due` : "✓ caught up"}
+                  {hasDue
+                    ? `📬 ${dueCount} due`
+                    : hasCards
+                      ? "✓ caught up"
+                      : "No cards yet"}
                 </span>
               </button>
             );
